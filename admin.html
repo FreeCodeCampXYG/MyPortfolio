@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="作品管理 - Portfolio Blog">
+    <title>管理 | Portfolio</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <a href="index.html" class="logo">
+                <span class="logo-icon">P</span>
+                <span>Portfolio</span>
+            </a>
+            <nav class="nav-links">
+                <a href="index.html" class="nav-link">作品</a>
+                <a href="admin.html" class="nav-link active">管理</a>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main">
+        <div id="login-view" class="login-container" style="display: none;">
+            <div class="login-card">
+                <div class="login-icon">🔐</div>
+                <h1 class="login-title">管理员登录</h1>
+                <p class="login-subtitle">请输入密码以访问管理功能</p>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="password" class="form-label">密码</label>
+                        <input type="password" id="password" class="form-input" placeholder="请输入管理密码" required autocomplete="current-password">
+                    </div>
+                    <div id="login-error" class="form-hint" style="color: var(--error); display: none;">密码错误，请重试</div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">登录</button>
+                </form>
+                <p class="form-hint" style="text-align: center; margin-top: 1rem;">默认密码: admin123</p>
+            </div>
+        </div>
+
+        <div id="admin-view" style="display: none;">
+            <div class="admin-header">
+                <div>
+                    <h1 class="page-title">作品管理</h1>
+                    <p class="page-subtitle">添加、编辑或删除你的作品</p>
+                </div>
+                <div class="admin-actions">
+                    <button id="add-work-btn" class="btn btn-primary">
+                        <span>+</span>
+                        <span>添加作品</span>
+                    </button>
+                    <button id="logout-btn" class="btn btn-secondary">退出登录</button>
+                </div>
+            </div>
+
+            <div id="admin-works-container" class="works-grid"></div>
+
+            <div id="admin-empty-state" class="empty-state" style="display: none;">
+                <div class="empty-state-icon">📝</div>
+                <h2 class="empty-state-title">还没有作品</h2>
+                <p class="empty-state-description">点击上方"添加作品"按钮开始创建你的第一个作品展示</p>
+            </div>
+        </div>
+    </main>
+
+    <div id="work-modal" class="modal-overlay" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modal-title" class="modal-title">添加作品</h2>
+                <button class="modal-close" aria-label="关闭">✕</button>
+            </div>
+            <form id="work-form">
+                <div class="modal-body">
+                    <input type="hidden" id="work-id">
+                    <div class="form-group">
+                        <label for="work-title" class="form-label required">作品标题</label>
+                        <input type="text" id="work-title" class="form-input" placeholder="输入作品名称" required maxlength="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="work-description" class="form-label">作品描述</label>
+                        <textarea id="work-description" class="form-input form-textarea" placeholder="简要描述你的作品" maxlength="500"></textarea>
+                        <p class="form-hint">最多 500 字符</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="work-link" class="form-label">作品链接</label>
+                        <input type="url" id="work-link" class="form-input" placeholder="https://example.com">
+                        <p class="form-hint">点击作品卡片将跳转到此链接</p>
+                    </div>
+                    <div class="form-group">
+                        <label for="work-image" class="form-label">封面图片</label>
+                        <input type="url" id="work-image" class="form-input" placeholder="https://example.com/image.jpg">
+                        <p class="form-hint">建议使用 16:9 比例的图片 URL</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary modal-cancel">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div id="confirm-modal" class="modal-overlay" role="dialog" aria-modal="true">
+        <div class="modal" style="max-width: 400px;">
+            <div class="modal-body">
+                <div class="confirm-message">
+                    <div class="confirm-icon">⚠️</div>
+                    <h3 class="confirm-text">确定要删除这个作品吗？此操作无法撤销。</h3>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="cancel-delete">取消</button>
+                <button class="btn btn-danger" id="confirm-delete">删除</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast-container" class="toast-container"></div>
+
+    <script src="js/data.js"></script>
+    <script src="js/admin.js"></script>
+</body>
+</html>
